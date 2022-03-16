@@ -1,5 +1,6 @@
 package edu.school21.cinema.config;
 
+import com.zaxxer.hikari.HikariDataSource;
 import edu.school21.cinema.repositories.UserRepository;
 import edu.school21.cinema.repositories.UserRepositoryImpl;
 import edu.school21.cinema.services.UserService;
@@ -35,21 +36,21 @@ public class ApplicationConfig {
     @Value("${db.driver.name}")
     private String driverName;
 
-//    @Bean
-//    public HikariDataSource dataSource() {
-//        HikariDataSource ds = new HikariDataSource();
-//        ds.setJdbcUrl(url);
-//        ds.setUsername(user);
-//        ds.setPassword(password);
-//        ds.setDriverClassName(driverName);
-//        return ds;
-//    }
-
     @Bean
-    public DataSource dataSource() {
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder.setType(EmbeddedDatabaseType.HSQL).addScripts("schema.sql", "data.sql").build();
+    public HikariDataSource dataSource() {
+        HikariDataSource ds = new HikariDataSource();
+        ds.setJdbcUrl(url);
+        ds.setUsername(user);
+        ds.setPassword(password);
+        ds.setDriverClassName(driverName);
+        return ds;
     }
+
+//    @Bean
+//    public DataSource dataSource() {
+//        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+//        return builder.setType(EmbeddedDatabaseType.HSQL).addScripts("schema.sql", "data.sql").build();
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -66,7 +67,3 @@ public class ApplicationConfig {
         return new UserService(ur, pe);
     }
 }
-
-
-//    EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-//    DataSource ds = builder.setType(EmbeddedDatabaseType.HSQL).addScripts("schema.sql", "data.sql").build();

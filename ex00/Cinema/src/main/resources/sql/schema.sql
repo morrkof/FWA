@@ -1,7 +1,7 @@
 DROP table IF EXISTS users;
 CREATE table users
 (
-    ID IDENTITY,
+    ID        serial       not null primary key,
     FIRSTNAME VARCHAR(100) not null,
     LASTNAME  VARCHAR(100) not null,
     EMAIL     VARCHAR(100) not null,

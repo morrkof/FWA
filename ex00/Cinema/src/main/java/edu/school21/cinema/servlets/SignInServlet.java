@@ -2,6 +2,8 @@ package edu.school21.cinema.servlets;
 
 import edu.school21.cinema.services.UserService;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -38,14 +40,19 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        String name = req.getParameter("name");
-//        String password = req.getParameter("pass");
-//        User user = new User(name, password);
-//        Model model = Model.getInstance();
-//        model.add(user);
-//
-//        req.setAttribute("userName", name);
-        doGet(req, resp);
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        System.out.println(email + "   " + password + "   " + passwordEncoder.encode(password));
+
+        if (userService.authorizeUser(email, password)) {
+
+            // add session and redirect to profile
+            req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
+        } else {
+            doGet(req, resp);
+        }
     }
 
     public void destroy() {
