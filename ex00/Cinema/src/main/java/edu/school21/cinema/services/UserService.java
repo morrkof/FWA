@@ -25,12 +25,15 @@ public class UserService {
         return true;
     }
 
-    public boolean authorizeUser(String email, String password) {
+    public User authorizeUser(String email, String password) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (!optionalUser.isPresent()) {
-            return false;
+            return null;
         }
         User user = optionalUser.get();
-        return passwordEncoder.matches(password, user.getPassword());
+        if(passwordEncoder.matches(password, user.getPassword())) {
+            return user;
+        }
+        return null;
     }
 }
