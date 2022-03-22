@@ -49,14 +49,16 @@ public class SignInServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        User user = userService.authorizeUser(email, password);
-        if (user != null) {
-            HttpSession session = req.getSession();
-            session.setAttribute("user", user);
-            req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
-        } else {
-            doGet(req, resp);
+        if (email != null && !email.isEmpty() && password != null && !password.isEmpty()) {
+            User user = userService.authorizeUser(email, password);
+            if (user != null) {
+                HttpSession session = req.getSession();
+                session.setAttribute("user", user);
+                req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
+                return;
+            }
         }
+        doGet(req, resp);
     }
 
     public void destroy() {
