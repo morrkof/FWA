@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
+
+<%--TODO add table with sessions, table with pics, button upload, button logout, pic--%>
+<%--TODO add this all to user entity--%>
 <form method="get" action="profile" >
 <%
     if (request.getSession().getAttribute("user") != null) {

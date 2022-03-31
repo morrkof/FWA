@@ -5,4 +5,5 @@ import javax.servlet.http.HttpServlet;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
+    //TODO delete session on get request
 }

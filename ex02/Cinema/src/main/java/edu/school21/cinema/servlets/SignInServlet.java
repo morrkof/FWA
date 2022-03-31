@@ -59,6 +59,7 @@ public class SignInServlet extends HttpServlet {
                 session.setAttribute("user", user);
                 resp.sendRedirect("/profile");
 //                req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
+                //TODO save session to table SESSIONS with datetime and IP
                 return;
             }
         }
