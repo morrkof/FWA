@@ -5,6 +5,23 @@ import javax.servlet.http.HttpServlet;
 
 @WebServlet("/images")
 public class ImagesServlet extends HttpServlet {
-    // todo post request - save pic on disk and link in table
-    //todo save original names in table and give them new unique names
+    private UserService userService;
+    // + imageService for select and put into user
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        ServletContext context = getServletContext();
+        ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
+        this.userService = springContext.getBean(UserService.class);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // make image main avatar
+    }
+
+    public void destroy() {
+        super.destroy();
+    }
 }
