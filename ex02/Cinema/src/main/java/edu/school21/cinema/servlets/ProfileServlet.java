@@ -33,8 +33,8 @@ public class ProfileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        HttpSession session = req.getSession();
-//        req.setAttribute("user", session.getAttribute("user"));
+        HttpSession session = req.getSession();
+        req.setAttribute("user", session.getAttribute("user"));
 
 //        session.setAttribute("user", userHandler.get(((Optional<User>) session.getAttribute("user")).get().getEmail()));
 //        User user = ((Optional<User>) session.getAttribute("user")).get();

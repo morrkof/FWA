@@ -37,7 +37,6 @@ public class SignInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        System.out.println("Hello");
         if (session.getAttribute("user") != null) {
             System.err.println("---SIGNIN---   " + session.getAttribute("user").toString());
 //            resp.sendRedirect("/profile");
