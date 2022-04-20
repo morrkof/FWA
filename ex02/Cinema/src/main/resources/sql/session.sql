@@ -1,5 +1,5 @@
-DROP table IF EXISTS sessions;
-CREATE table sessions
+DROP table IF EXISTS session;
+CREATE table session
 (
     ID          serial      not null primary key,
     USERID      int         not null references users (id),
