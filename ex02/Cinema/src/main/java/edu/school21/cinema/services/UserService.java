@@ -25,6 +25,10 @@ public class UserService {
         return true;
     }
 
+    public void updateUser(User user) {
+        userRepository.update(user);
+    }
+
     public User authorizeUser(String email, String password) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (!optionalUser.isPresent()) {

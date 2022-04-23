@@ -3,6 +3,7 @@ package edu.school21.cinema.services;
 import edu.school21.cinema.models.Image;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.repositories.ImageRepository;
+import edu.school21.cinema.repositories.ImageRepositoryImpl;
 
 import java.util.List;
 
@@ -16,5 +17,9 @@ public class ImageService {
 
     public List<Image> getAllUserImages(User user) {
         return imageRepository.findAllByUserid(user.getId());
+    }
+
+    public int saveImage(Image image) {
+        return imageRepository.saveAndReturn(image);
     }
 }

@@ -8,5 +8,7 @@ public interface ImageRepository extends CrudRepository<Image> {
 
     List<Image> findAllByUserid(long userid);
 
+    public int saveAndReturn(Image image);
+
 
 }

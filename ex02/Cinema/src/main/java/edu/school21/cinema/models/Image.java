@@ -11,9 +11,11 @@ public class Image {
     private String filepath;
     private Long size;
     private String mimetype;
+    private static int count = 0;
 
 
     public Image() {
+        count++;
     }
 
     public Image(Long id, Long userId, String originalName, String uniqueName, String filepath, Long size, String mimetype) {
@@ -24,6 +26,7 @@ public class Image {
         this.filepath = filepath;
         this.size = size;
         this.mimetype = mimetype;
+        count++;
     }
 
     public Image(Long userId, String originalName, String uniqueName, String filepath, Long size, String mimetype) {
@@ -33,7 +36,10 @@ public class Image {
         this.filepath = filepath;
         this.size = size;
         this.mimetype = mimetype;
+        count++;
     }
+
+    public static int getCount() {return count;}
 
     public Long getId() {
         return id;

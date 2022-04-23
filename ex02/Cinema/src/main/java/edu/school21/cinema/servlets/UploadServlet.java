@@ -1,6 +1,8 @@
 package edu.school21.cinema.servlets;
 
+import edu.school21.cinema.models.Image;
 import edu.school21.cinema.models.User;
+import edu.school21.cinema.services.ImageService;
 import edu.school21.cinema.services.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,7 +25,7 @@ import java.nio.file.Paths;
 public class UploadServlet extends HttpServlet {
 
     private UserService userService;
-    // not user, imageService
+    private ImageService imageService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -39,18 +41,23 @@ public class UploadServlet extends HttpServlet {
         if (session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
             Path path = Files.createDirectories(Paths.get("src/main/webapp/images/" + user.getId()));
-            String absolute = path.toAbsolutePath().toString();
             Part filePart = req.getPart("file");
+
+            String absolute = path.toAbsolutePath().toString();
             String fileName = filePart.getSubmittedFileName();
             String type = filePart.getContentType();
             long size = filePart.getSize();
-            System.out.println(fileName + "   " + type + "  " + size + "  " + absolute);
-            for (Part part : req.getParts()) { //TODO fileID
-                part.write(absolute + "/" + fileName);
-            }
-        }
 
-        resp.getWriter().print("The file uploaded successfully.");
+            for (Part part : req.getParts()) {
+                part.write(absolute + "/" + Image.getCount() + "_" + fileName);
+            }
+
+            Image image = new Image(user.getId(), fileName, Image.getCount() + "_" + fileName, absolute + "/" + Image.getCount() + "_" + fileName, size, type);
+            int id = imageService.saveImage(image);
+            user.setAvatar(id);
+            userService.updateUser(user);
+        }
+        resp.sendRedirect("/profile");
     }
 
     public void destroy() {

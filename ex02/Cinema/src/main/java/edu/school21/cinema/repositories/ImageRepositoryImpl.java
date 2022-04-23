@@ -51,6 +51,12 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
+    public int saveAndReturn(Image image) {
+        return jdbcTemplate.update("INSERT INTO image (userid, original_name, unique_name, filepath, filesize, mimetype) VALUES (?, ?, ?, ?, ?, ?) RETURNING id",
+                image.getUserId(), image.getOriginalName(), image.getUniqueName(), image.getFilepath(), image.getSize(), image.getMimetype());
+    }
+
+    @Override
     public void update(Image image) {
         jdbcTemplate.update("UPDATE image SET userid = ?, original_name = ?, unique_name = ?, filepath = ?, filesize = ?, mimetype = ? WHERE id = ?",
                 image.getUserId(), image.getOriginalName(), image.getUniqueName(), image.getFilepath(), image.getSize(), image.getMimetype(), image.getId());
