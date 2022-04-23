@@ -1,6 +1,7 @@
 package edu.school21.cinema.servlets;
 
 import edu.school21.cinema.models.User;
+import edu.school21.cinema.services.SessionService;
 import edu.school21.cinema.services.UserService;
 import org.springframework.context.ApplicationContext;
 
@@ -21,46 +22,26 @@ public class ProfileServlet extends HttpServlet {
         super();
     }
 
-    private UserService userService;
+    private SessionService sessionService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         ServletContext context = getServletContext();
         ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
-        this.userService = springContext.getBean(UserService.class);
+        this.sessionService = springContext.getBean(SessionService.class);
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         HttpSession session = req.getSession();
-        req.setAttribute("user", session.getAttribute("user"));
-
-//        session.setAttribute("user", userHandler.get(((Optional<User>) session.getAttribute("user")).get().getEmail()));
-//        User user = ((Optional<User>) session.getAttribute("user")).get();
-//        session.setAttribute("authUser", user);
-
-//        if (session.getAttribute("user") != null) {
-            req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
-//        } else {
-//            req.getRequestDispatcher("WEB-INF/jsp/signIn.jsp").forward(req, resp);
-//        }
+        if (session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
+            req.setAttribute("user", user);
+            req.setAttribute("userSessions", sessionService.getAllUserSession(user));
+            req.getRequestDispatcher("WEB-INF/jsp/profile.jsp").forward(req, resp);
+        }
     }
-
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-////        String email = req.getParameter("email");
-////        String password = req.getParameter("password");
-////
-////        User user = userService.authorizeUser(email, password);
-////        if (user != null) {
-////            HttpSession session = req.getSession();
-////            session.setAttribute("user", user);
-//            req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
-////        } else {
-////            doGet(req, resp);
-////        }
-//    }
 
     public void destroy() {
         super.destroy();

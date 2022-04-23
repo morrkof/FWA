@@ -10,13 +10,15 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+@MultipartConfig
 @WebServlet("/upload")
 public class UploadServlet extends HttpServlet {
 
@@ -33,7 +35,22 @@ public class UploadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       // make upload image and save path into table
+        HttpSession session = req.getSession();
+        if (session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
+            Path path = Files.createDirectories(Paths.get("src/main/webapp/images/" + user.getId()));
+            String absolute = path.toAbsolutePath().toString();
+            Part filePart = req.getPart("file");
+            String fileName = filePart.getSubmittedFileName();
+            String type = filePart.getContentType();
+            long size = filePart.getSize();
+            System.out.println(fileName + "   " + type + "  " + size + "  " + absolute);
+            for (Part part : req.getParts()) { //TODO fileID
+                part.write(absolute + "/" + fileName);
+            }
+        }
+
+        resp.getWriter().print("The file uploaded successfully.");
     }
 
     public void destroy() {

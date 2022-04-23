@@ -10,26 +10,29 @@ public class User {
     private String email;
     private String phone;
     private String password;
+    private long avatar;
 
     public User() {
     }
 
-    public User(String firstname, String lastname, String email, String phone, String password) {
+    public User(String firstname, String lastname, String email, String phone, String password, long avatar) {
         this.id = null;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.phone = phone;
         this.password = password;
+        this.avatar = avatar;
     }
 
-    public User(Long id, String firstname, String lastname, String email, String phone, String password) {
+    public User(Long id, String firstname, String lastname, String email, String phone, String password, long avatar) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.phone = phone;
         this.password = password;
+        this.avatar = avatar;
     }
 
     public Long getId() {
@@ -80,17 +83,25 @@ public class User {
         this.password = password;
     }
 
+    public long getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(long avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(phone, user.phone) && Objects.equals(password, user.password);
+        return Objects.equals(id, user.id) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(phone, user.phone) && Objects.equals(password, user.password) && Objects.equals(avatar, user.avatar);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, email, phone, password);
+        return Objects.hash(id, firstname, lastname, email, phone, password, avatar);
     }
 
     @Override
@@ -102,6 +113,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
+                ", avatar='" + avatar + '\'' +
                 '}';
     }
 }

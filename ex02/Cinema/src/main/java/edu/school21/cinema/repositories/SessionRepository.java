@@ -1,4 +1,10 @@
 package edu.school21.cinema.repositories;
 
-public interface SessionRepository extends CrudRepository{
+import edu.school21.cinema.models.Session;
+
+import java.util.List;
+
+public interface SessionRepository extends CrudRepository<Session>{
+
+    List<Session> findAllByUserid(long userid);
 }

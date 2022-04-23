@@ -16,12 +16,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public boolean saveUser(String firstname, String lastname, String email, String phone, String password) {
+    public boolean saveUser(String firstname, String lastname, String email, String phone, String password, long avatar) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent()) {
             return false;
         }
-        userRepository.save(new User(firstname, lastname, email, phone, passwordEncoder.encode(password)));
+        userRepository.save(new User(firstname, lastname, email, phone, passwordEncoder.encode(password), avatar));
         return true;
     }
 

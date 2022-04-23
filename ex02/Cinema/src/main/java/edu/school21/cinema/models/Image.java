@@ -5,34 +5,34 @@ import java.util.Objects;
 public class Image {
 
     private Long id;
-    private User userId;
-    private String filename;
+    private Long userId;
+    private String originalName;
+    private String uniqueName;
     private String filepath;
     private Long size;
     private String mimetype;
-    private boolean isAvatar;
+
 
     public Image() {
     }
 
-    public Image(Long id, User userId, String filename, String filepath, Long size, String mimetype, boolean isAvatar) {
+    public Image(Long id, Long userId, String originalName, String uniqueName, String filepath, Long size, String mimetype) {
         this.id = id;
         this.userId = userId;
-        this.filename = filename;
+        this.originalName = originalName;
+        this.uniqueName = uniqueName;
         this.filepath = filepath;
         this.size = size;
         this.mimetype = mimetype;
-        this.isAvatar = isAvatar;
     }
 
-    public Image(User userId, String filename, String filepath, Long size, String mimetype, boolean isAvatar) {
-        this.id = null;
+    public Image(Long userId, String originalName, String uniqueName, String filepath, Long size, String mimetype) {
         this.userId = userId;
-        this.filename = filename;
+        this.originalName = originalName;
+        this.uniqueName = uniqueName;
         this.filepath = filepath;
         this.size = size;
         this.mimetype = mimetype;
-        this.isAvatar = isAvatar;
     }
 
     public Long getId() {
@@ -43,20 +43,28 @@ public class Image {
         this.id = id;
     }
 
-    public User getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public String getFilename() {
-        return filename;
+    public String getOriginalName() {
+        return originalName;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
+    }
+
+    public String getUniqueName() {
+        return uniqueName;
+    }
+
+    public void setUniqueName(String uniqueName) {
+        this.uniqueName = uniqueName;
     }
 
     public String getFilepath() {
@@ -83,25 +91,17 @@ public class Image {
         this.mimetype = mimetype;
     }
 
-    public boolean isAvatar() {
-        return isAvatar;
-    }
-
-    public void setAvatar(boolean avatar) {
-        isAvatar = avatar;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Image image = (Image) o;
-        return isAvatar == image.isAvatar && Objects.equals(id, image.id) && Objects.equals(userId, image.userId) && Objects.equals(filename, image.filename) && Objects.equals(filepath, image.filepath) && Objects.equals(size, image.size) && Objects.equals(mimetype, image.mimetype);
+        return Objects.equals(id, image.id) && Objects.equals(userId, image.userId) && Objects.equals(originalName, image.originalName) && Objects.equals(uniqueName, image.uniqueName) && Objects.equals(filepath, image.filepath) && Objects.equals(size, image.size) && Objects.equals(mimetype, image.mimetype);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, filename, filepath, size, mimetype, isAvatar);
+        return Objects.hash(id, userId, originalName, uniqueName, filepath, size, mimetype);
     }
 
     @Override
@@ -109,11 +109,11 @@ public class Image {
         return "Image{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", filename='" + filename + '\'' +
+                ", originalName='" + originalName + '\'' +
+                ", uniqueName='" + uniqueName + '\'' +
                 ", filepath='" + filepath + '\'' +
                 ", size=" + size +
                 ", mimetype='" + mimetype + '\'' +
-                ", isAvatar=" + isAvatar +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package edu.school21.cinema.servlets;
 
 import edu.school21.cinema.models.User;
+import edu.school21.cinema.services.SessionService;
 import edu.school21.cinema.services.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +26,7 @@ public class SignInServlet extends HttpServlet {
     }
 
     private UserService userService;
+    private SessionService sessionService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -32,15 +34,14 @@ public class SignInServlet extends HttpServlet {
         ServletContext context = getServletContext();
         ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
         this.userService = springContext.getBean(UserService.class);
+        this.sessionService = springContext.getBean(SessionService.class);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         if (session.getAttribute("user") != null) {
-            System.err.println("---SIGNIN---   " + session.getAttribute("user").toString());
-//            resp.sendRedirect("/profile");
-            req.getRequestDispatcher("/profile").forward(req, resp); // not forward, redirect
+            resp.sendRedirect("/profile");
         } else {
             req.getRequestDispatcher("WEB-INF/jsp/signIn.jsp").forward(req, resp);
         }
@@ -56,9 +57,8 @@ public class SignInServlet extends HttpServlet {
             if (user != null) {
                 HttpSession session = req.getSession();
                 session.setAttribute("user", user);
+                sessionService.saveSession(user, req.getRemoteAddr());
                 resp.sendRedirect("/profile");
-//                req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp);
-                //TODO save session to table SESSIONS with datetime and IP
                 return;
             }
         }

@@ -1,6 +1,12 @@
 package edu.school21.cinema.repositories;
 
-public interface ImageRepository extends CrudRepository{
+import edu.school21.cinema.models.Image;
+
+import java.util.List;
+
+public interface ImageRepository extends CrudRepository<Image> {
+
+    List<Image> findAllByUserid(long userid);
 
 
 }

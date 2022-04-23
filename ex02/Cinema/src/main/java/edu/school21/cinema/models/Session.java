@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Session {
 
     private Long id;
-    private User userId;
+    private long userId;
     private LocalDate date;
     private LocalTime time;
     private String ip;
@@ -15,7 +15,7 @@ public class Session {
     public Session() {
     }
 
-    public Session(Long id, User userId, LocalDate date, LocalTime time, String ip) {
+    public Session(Long id, long userId, LocalDate date, LocalTime time, String ip) {
         this.id = id;
         this.userId = userId;
         this.date = date;
@@ -23,7 +23,7 @@ public class Session {
         this.ip = ip;
     }
 
-    public Session(User userId, LocalDate date, LocalTime time, String ip) {
+    public Session(long userId, LocalDate date, LocalTime time, String ip) {
         this.id = null;
         this.userId = userId;
         this.date = date;
@@ -39,11 +39,11 @@ public class Session {
         this.id = id;
     }
 
-    public User getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

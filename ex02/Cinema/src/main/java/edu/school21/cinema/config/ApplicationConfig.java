@@ -1,8 +1,9 @@
 package edu.school21.cinema.config;
 
 import com.zaxxer.hikari.HikariDataSource;
-import edu.school21.cinema.repositories.UserRepository;
-import edu.school21.cinema.repositories.UserRepositoryImpl;
+import edu.school21.cinema.repositories.*;
+import edu.school21.cinema.services.ImageService;
+import edu.school21.cinema.services.SessionService;
 import edu.school21.cinema.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,7 +50,7 @@ public class ApplicationConfig {
 //    @Bean
 //    public DataSource dataSource() {
 //        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-//        return builder.setType(EmbeddedDatabaseType.HSQL).addScripts("schema.sql", "data.sql").build();
+//        return builder.setType(EmbeddedDatabaseType.HSQL).addScripts("users.sql", "data.sql").build();
 //    }
 
     @Bean
@@ -63,7 +64,27 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public SessionRepositoryImpl sessionRepository(@Autowired DataSource ds) throws SQLException, IOException {
+        return new SessionRepositoryImpl(ds);
+    }
+
+    @Bean
+    public ImageRepositoryImpl imageRepository(@Autowired DataSource ds) throws SQLException, IOException {
+        return new ImageRepositoryImpl(ds);
+    }
+
+    @Bean
     public UserService userService(@Autowired UserRepository ur, PasswordEncoder pe) throws SQLException, IOException {
         return new UserService(ur, pe);
+    }
+
+    @Bean
+    public SessionService sessionService(@Autowired SessionRepository sr) throws SQLException, IOException {
+        return new SessionService(sr);
+    }
+
+    @Bean
+    public ImageService imageService(@Autowired ImageRepository ir) throws SQLException, IOException {
+        return new ImageService(ir);
     }
 }

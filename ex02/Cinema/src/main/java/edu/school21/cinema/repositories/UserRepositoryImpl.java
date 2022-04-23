@@ -19,9 +19,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private final RowMapper<User> userRowMapper = (resultSet, rowNum) -> {
-        return new User(resultSet.getLong("id"), resultSet.getString("firstname"),
-                resultSet.getString("lastname"), resultSet.getString("email"),
-                resultSet.getString("phone"), resultSet.getString("password"));
+        return new User(resultSet.getLong("id"),
+                resultSet.getString("firstname"),
+                resultSet.getString("lastname"),
+                resultSet.getString("email"),
+                resultSet.getString("phone"),
+                resultSet.getString("password"),
+                resultSet.getLong("avatar"));
     };
 
     @Override
@@ -41,14 +45,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void save(User user) {
-        jdbcTemplate.update("INSERT INTO users (firstname, lastname, email, phone, password) VALUES (?, ?, ?, ?, ?)",
-                user.getFirstname(), user.getLastname(), user.getEmail(), user.getPhone(), user.getPassword());
+        jdbcTemplate.update("INSERT INTO users (firstname, lastname, email, phone, password, avatar) VALUES (?, ?, ?, ?, ?, ?)",
+                user.getFirstname(), user.getLastname(), user.getEmail(), user.getPhone(), user.getPassword(), user.getAvatar());
     }
 
     @Override
     public void update(User user) {
-        jdbcTemplate.update("UPDATE users SET firstname = ?, lastname = ?, email = ?, phone = ?, password = ? WHERE id = ?",
-                user.getFirstname(), user.getLastname(), user.getEmail(), user.getPhone(), user.getPassword(), user.getId());
+        jdbcTemplate.update("UPDATE users SET firstname = ?, lastname = ?, email = ?, phone = ?, password = ?, avatar = ? WHERE id = ?",
+                user.getFirstname(), user.getLastname(), user.getEmail(), user.getPhone(), user.getPassword(), user.getAvatar(), user.getId());
     }
 
     @Override

@@ -32,7 +32,7 @@ public class SignUpServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         if (session.getAttribute("user") != null) {
-            req.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(req, resp); // not forward, redirect
+            resp.sendRedirect("/profile");
         } else {
             req.getRequestDispatcher("WEB-INF/jsp/signUp.jsp").forward(req, resp);
         }
@@ -45,8 +45,8 @@ public class SignUpServlet extends HttpServlet {
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
         String password = req.getParameter("password");
-        User user = new User(firstname, lastname, email, phone, password);
-        if (userService.saveUser(firstname, lastname, email, phone, password)) {
+        User user = new User(firstname, lastname, email, phone, password, 1L);
+        if (userService.saveUser(firstname, lastname, email, phone, password, 1L)) {
             req.getRequestDispatcher("WEB-INF/jsp/signIn.jsp").forward(req, resp); // not forward, redirect
         } else {
             doGet(req, resp);
