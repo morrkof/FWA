@@ -11,11 +11,13 @@ public class Image {
     private String filepath;
     private Long size;
     private String mimetype;
-    private static int count = 0;
-
+    private String normalSize;
 
     public Image() {
-        count++;
+    }
+
+    public String getNormalSize() {
+        return normalSize;
     }
 
     public Image(Long id, Long userId, String originalName, String uniqueName, String filepath, Long size, String mimetype) {
@@ -26,7 +28,13 @@ public class Image {
         this.filepath = filepath;
         this.size = size;
         this.mimetype = mimetype;
-        count++;
+        if (size >= 1000000) {
+            this.normalSize = size/1000000 + "MB";
+        } else if (size >= 1000) {
+            this.normalSize = size/1000 + "KB";
+        } else {
+            this.normalSize = size + "B";
+        }
     }
 
     public Image(Long userId, String originalName, String uniqueName, String filepath, Long size, String mimetype) {
@@ -36,10 +44,14 @@ public class Image {
         this.filepath = filepath;
         this.size = size;
         this.mimetype = mimetype;
-        count++;
+        if (size >= 1048576) {
+            this.normalSize = size/1048576f + "MB";
+        } else if (size >= 1024) {
+            this.normalSize = size/1024f + "KB";
+        } else {
+            this.normalSize = size + "B";
+        }
     }
-
-    public static int getCount() {return count;}
 
     public Long getId() {
         return id;

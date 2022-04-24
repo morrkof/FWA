@@ -1,12 +1,17 @@
 package edu.school21.cinema.repositories;
 
 import edu.school21.cinema.models.Image;
-import edu.school21.cinema.models.Session;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,8 +57,9 @@ public class ImageRepositoryImpl implements ImageRepository {
 
     @Override
     public int saveAndReturn(Image image) {
-        return jdbcTemplate.update("INSERT INTO image (userid, original_name, unique_name, filepath, filesize, mimetype) VALUES (?, ?, ?, ?, ?, ?) RETURNING id",
-                image.getUserId(), image.getOriginalName(), image.getUniqueName(), image.getFilepath(), image.getSize(), image.getMimetype());
+        return jdbcTemplate.queryForObject("INSERT INTO image (userid, original_name, unique_name, filepath, filesize, mimetype) VALUES (?, ?, ?, ?, ?, ?) RETURNING id",
+                Integer.class, image.getUserId(), image.getOriginalName(), image.getUniqueName(), image.getFilepath(), image.getSize(), image.getMimetype());
+
     }
 
     @Override
@@ -70,6 +76,6 @@ public class ImageRepositoryImpl implements ImageRepository {
 
     @Override
     public List<Image> findAllByUserid(long userid) {
-        return jdbcTemplate.query("SELECT * FROM image WHERE userid = ? ORDER BY id DESC", imageRowMapper, userid);
+        return jdbcTemplate.query("SELECT * FROM image WHERE userid = ? ORDER BY id DESC LIMIT 5", imageRowMapper, userid);
     }
 }

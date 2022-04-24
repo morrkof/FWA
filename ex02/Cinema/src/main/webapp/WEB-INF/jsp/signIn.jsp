@@ -23,7 +23,6 @@
                     <input class="w3-input w3-border" name="password" type="password" placeholder="Password">
                 </div>
             </div>
-
             <button type="submit" class="w3-button w3-block w3-section w3-cyan w3-ripple w3-padding">Sign In</button>
         </form>
     </div>

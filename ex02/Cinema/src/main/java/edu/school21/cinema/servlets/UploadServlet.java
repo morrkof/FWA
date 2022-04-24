@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.UUID;
 
 @MultipartConfig
 @WebServlet("/upload")
@@ -33,6 +35,7 @@ public class UploadServlet extends HttpServlet {
         ServletContext context = getServletContext();
         ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
         this.userService = springContext.getBean(UserService.class);
+        this.imageService = springContext.getBean(ImageService.class);
     }
 
     @Override
@@ -40,22 +43,13 @@ public class UploadServlet extends HttpServlet {
         HttpSession session = req.getSession();
         if (session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
-            Path path = Files.createDirectories(Paths.get("src/main/webapp/images/" + user.getId()));
-            Part filePart = req.getPart("file");
-
-            String absolute = path.toAbsolutePath().toString();
-            String fileName = filePart.getSubmittedFileName();
-            String type = filePart.getContentType();
-            long size = filePart.getSize();
-
-            for (Part part : req.getParts()) {
-                part.write(absolute + "/" + Image.getCount() + "_" + fileName);
+            Image image = imageService.saveImage(req, user.getId());
+            if (image == null) {
+                resp.sendRedirect("/profile");
             }
-
-            Image image = new Image(user.getId(), fileName, Image.getCount() + "_" + fileName, absolute + "/" + Image.getCount() + "_" + fileName, size, type);
-            int id = imageService.saveImage(image);
-            user.setAvatar(id);
+            user.setAvatar(image.getId());
             userService.updateUser(user);
+            session.setAttribute("image", image);
         }
         resp.sendRedirect("/profile");
     }

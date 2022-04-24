@@ -14,21 +14,19 @@ public class ServletFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpSession session = ((HttpServletRequest)servletRequest).getSession();
         if (session.getAttribute("user") == null) {
-            ((HttpServletResponse)servletResponse).sendError(403);
-            return;
+            ((HttpServletResponse)servletResponse).setStatus(403);
+            servletRequest.getRequestDispatcher("WEB-INF/jsp/forbidden.jsp").forward(servletRequest, servletResponse);
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
     public void destroy() {
-
     }
 }

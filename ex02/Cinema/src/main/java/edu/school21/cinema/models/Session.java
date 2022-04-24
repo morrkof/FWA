@@ -1,5 +1,6 @@
 package edu.school21.cinema.models;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -11,6 +12,10 @@ public class Session {
     private LocalDate date;
     private LocalTime time;
     private String ip;
+    private String normalDate;
+    private String normalTime;
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+    private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     public Session() {
     }
@@ -21,6 +26,8 @@ public class Session {
         this.date = date;
         this.time = time;
         this.ip = ip;
+//        this.normalDate = dateFormat.format(date);
+//        this.normalTime = timeFormat.format(time);
     }
 
     public Session(long userId, LocalDate date, LocalTime time, String ip) {
@@ -29,6 +36,16 @@ public class Session {
         this.date = date;
         this.time = time;
         this.ip = ip;
+        this.normalDate = dateFormat.format(date);
+        this.normalTime = timeFormat.format(time);
+    }
+
+    public String getNormalDate() {
+        return normalDate;
+    }
+
+    public String getNormalTime() {
+        return normalTime;
     }
 
     public Long getId() {

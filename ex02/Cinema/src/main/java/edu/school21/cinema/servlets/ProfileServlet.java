@@ -1,6 +1,7 @@
 package edu.school21.cinema.servlets;
 
 import edu.school21.cinema.models.User;
+import edu.school21.cinema.services.ImageService;
 import edu.school21.cinema.services.SessionService;
 import edu.school21.cinema.services.UserService;
 import org.springframework.context.ApplicationContext;
@@ -23,6 +24,7 @@ public class ProfileServlet extends HttpServlet {
     }
 
     private SessionService sessionService;
+    private ImageService imageService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -30,6 +32,7 @@ public class ProfileServlet extends HttpServlet {
         ServletContext context = getServletContext();
         ApplicationContext springContext = (ApplicationContext) context.getAttribute("springContext");
         this.sessionService = springContext.getBean(SessionService.class);
+        this.imageService = springContext.getBean(ImageService.class);
     }
 
     @Override
@@ -39,6 +42,8 @@ public class ProfileServlet extends HttpServlet {
             User user = (User) session.getAttribute("user");
             req.setAttribute("user", user);
             req.setAttribute("userSessions", sessionService.getAllUserSession(user));
+            req.setAttribute("userImages", imageService.getAllUserImages(user));
+            session.setAttribute("image", imageService.getImageByUserId(user));
             req.getRequestDispatcher("WEB-INF/jsp/profile.jsp").forward(req, resp);
         }
     }
