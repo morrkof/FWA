@@ -46,6 +46,7 @@ public class UploadServlet extends HttpServlet {
             Image image = imageService.saveImage(req, user.getId());
             if (image == null) {
                 resp.sendRedirect("/profile");
+                return;
             }
             user.setAvatar(image.getId());
             userService.updateUser(user);
