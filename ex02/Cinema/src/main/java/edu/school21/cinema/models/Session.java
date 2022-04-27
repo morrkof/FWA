@@ -3,6 +3,7 @@ package edu.school21.cinema.models;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Session {
@@ -14,8 +15,8 @@ public class Session {
     private String ip;
     private String normalDate;
     private String normalTime;
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-    private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+    private static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
 
     public Session() {
     }
@@ -26,8 +27,8 @@ public class Session {
         this.date = date;
         this.time = time;
         this.ip = ip;
-//        this.normalDate = dateFormat.format(date);
-//        this.normalTime = timeFormat.format(time);
+        this.normalDate = dateFormat.format(date);
+        this.normalTime = timeFormat.format(time);
     }
 
     public Session(long userId, LocalDate date, LocalTime time, String ip) {

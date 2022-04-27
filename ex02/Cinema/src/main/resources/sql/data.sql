@@ -1,13 +1,8 @@
 INSERT INTO users (firstname, lastname, email, phone, password)
 values ('Provence', 'Pipes', 'morrkof@gmail.com', '88007557575',
-        '$2a$10$G2gGUGpf4rezZHaWAGIx1OF0vTOb.SQaFgd6CArT5UjYHtQPN0Xsa'),
-       ('Harry', 'Potter', 'hpotter@email.com', '88007557575',
-        '$2a$10$kSmfgofsGtCHO/2j2J3HNuAFdwQwJCzCOiVaKwDdVX4p00ocBOnua'),
-       ('Hermione', 'Granger', 'hgranger@email.com', '88004444444',
-        '$2a$10$kSmfgofsGtCHO/2j2J3HNuAFdwQwJCzCOiVaKwDdVX4p00ocBOnua'),
-       ('Ronald', 'Weasley', 'rweasley@email.com', '87556657898',
-        '$2a$10$kSmfgofsGtCHO/2j2J3HNuAFdwQwJCzCOiVaKwDdVX4p00ocBOnua'),
-       ('Luna', 'Lovegood', 'llovegood@email.com', '88001234567',
-        '$2a$10$kSmfgofsGtCHO/2j2J3HNuAFdwQwJCzCOiVaKwDdVX4p00ocBOnua'),
-       ('Draco', 'Malfoy', 'dmalfoy@email.com', '89257654567',
-        '$2a$10$kSmfgofsGtCHO/2j2J3HNuAFdwQwJCzCOiVaKwDdVX4p00ocBOnua');
+        '$2a$10$G2gGUGpf4rezZHaWAGIx1OF0vTOb.SQaFgd6CArT5UjYHtQPN0Xsa');
+
+INSERT INTO image (userid, original_name, unique_name, filepath, filesize, mimetype)
+values (1, 'cat.png', '0_cat.png',
+        '/home/anastasia/Desktop/FWA-my/ex02/Cinema/target/cargo/configurations/tomcat9x/webapps/images/1/0_cat.png',
+        53621, 'image/png');

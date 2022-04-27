@@ -39,8 +39,8 @@
             <tbody>
             <c:forEach items="${requestScope.userSessions}" var="sess">
                 <tr>
-                    <td><c:out value="${sess.date}"/></td>
-                    <td><c:out value="${sess.time}"/></td>
+                    <td><c:out value="${sess.normalDate}"/></td>
+                    <td><c:out value="${sess.normalTime}"/></td>
                     <td><c:out value="${sess.ip}"/></td>
                 </tr>
             </c:forEach>
@@ -60,7 +60,7 @@
         <tbody>
         <c:forEach items="${requestScope.userImages}" var="img">
             <tr>
-                <td><c:out value="${img.originalName}"/></td>
+                <td> <a href="<c:out value="${img.filepath}"/>"><c:out value="${img.originalName}"/> </a></td>
                 <td><c:out value="${img.normalSize}"/></td>
                 <td><c:out value="${img.mimetype}"/></td>
                 <td>
