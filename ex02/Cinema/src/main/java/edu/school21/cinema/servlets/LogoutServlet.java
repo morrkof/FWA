@@ -27,15 +27,11 @@ public class LogoutServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
         if (session.getAttribute("user") != null) {
             session.removeAttribute("user");
         }
         resp.sendRedirect("/");
-    }
-
-    public void destroy() {
-        super.destroy();
     }
 }

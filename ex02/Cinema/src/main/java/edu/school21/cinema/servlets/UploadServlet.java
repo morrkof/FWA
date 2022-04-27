@@ -5,22 +5,17 @@ import edu.school21.cinema.models.User;
 import edu.school21.cinema.services.ImageService;
 import edu.school21.cinema.services.UserService;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.UUID;
 
 @MultipartConfig
 @WebServlet("/upload")
@@ -53,9 +48,5 @@ public class UploadServlet extends HttpServlet {
             session.setAttribute("image", image);
         }
         resp.sendRedirect("/profile");
-    }
-
-    public void destroy() {
-        super.destroy();
     }
 }

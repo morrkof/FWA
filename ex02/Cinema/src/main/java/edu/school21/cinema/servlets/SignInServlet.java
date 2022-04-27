@@ -4,10 +4,7 @@ import edu.school21.cinema.models.User;
 import edu.school21.cinema.services.SessionService;
 import edu.school21.cinema.services.UserService;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,10 +17,6 @@ import java.io.IOException;
 
 @WebServlet("/signIn")
 public class SignInServlet extends HttpServlet {
-
-    public SignInServlet() {
-        super();
-    }
 
     private UserService userService;
     private SessionService sessionService;
@@ -63,9 +56,5 @@ public class SignInServlet extends HttpServlet {
             }
         }
         doGet(req, resp);
-    }
-
-    public void destroy() {
-        super.destroy();
     }
 }

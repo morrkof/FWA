@@ -4,15 +4,13 @@ import edu.school21.cinema.config.ApplicationConfig;
 import edu.school21.cinema.models.Image;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.repositories.ImageRepository;
-import edu.school21.cinema.repositories.ImageRepositoryImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-import java.io.*;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,9 +36,8 @@ public class ImageService {
     }
 
     public Image saveImage(HttpServletRequest req, Long userid) throws ServletException, IOException {
-        ApplicationContext springContext = (ApplicationContext) new AnnotationConfigApplicationContext(ApplicationConfig.class);
+        ApplicationContext springContext = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         String storagePath = springContext.getBean("getStoragePath", String.class);
-        System.out.println(storagePath);
         Path pathProject = Files.createDirectories(Paths.get(storagePath + userid));
         Path pathContainer = Files.createDirectories(Paths.get("target/cargo/configurations/tomcat9x/webapps/images/" + userid));
         Part filePart = req.getPart("file");
@@ -59,17 +56,14 @@ public class ImageService {
 
             Image image = new Image(userid, fileName, uniqueName, pathContainer.toAbsolutePath() + "/" + uniqueName, size, type);
             int id = saveImage(image);
-            image.setId((long)id);
+            image.setId((long) id);
             return image;
         }
         return null;
     }
 
     public Image getImageByUserId(User user) {
-         Optional<Image> optionalImage = imageRepository.findById(user.getAvatar());
-         if (!optionalImage.isPresent()) {
-             return null;
-         }
-         return optionalImage.get();
+        Optional<Image> optionalImage = imageRepository.findById(user.getAvatar());
+        return optionalImage.orElse(null);
     }
 }

@@ -10,7 +10,7 @@
 <body>
 <div class="w3-panel" style="display:flex;justify-content: center;flex-wrap: wrap">
     <div style="flex: 0 0 20%; padding-right: 10px">
-        <img src="images/1/<%=((Image)session.getAttribute("image")).getUniqueName()%>" width="300" height="300"
+        <img src="images/<%=((Image)session.getAttribute("image")).getUserId()%>/<%=((Image)session.getAttribute("image")).getUniqueName()%>" width="300" height="300"
              class="w3-image w3-round">
 
         <form method="post" action="/upload" enctype="multipart/form-data">

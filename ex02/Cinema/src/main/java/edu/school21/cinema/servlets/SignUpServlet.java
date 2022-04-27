@@ -1,10 +1,8 @@
 package edu.school21.cinema.servlets;
 
-import edu.school21.cinema.models.User;
 import edu.school21.cinema.services.UserService;
 import org.springframework.context.ApplicationContext;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -45,9 +43,8 @@ public class SignUpServlet extends HttpServlet {
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
         String password = req.getParameter("password");
-        User user = new User(firstname, lastname, email, phone, password, 1L);
         if (userService.saveUser(firstname, lastname, email, phone, password, 1L)) {
-            req.getRequestDispatcher("WEB-INF/jsp/signIn.jsp").forward(req, resp); // not forward, redirect
+            req.getRequestDispatcher("WEB-INF/jsp/signIn.jsp").forward(req, resp);
         } else {
             doGet(req, resp);
         }

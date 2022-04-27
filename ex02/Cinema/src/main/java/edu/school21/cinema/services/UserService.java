@@ -35,7 +35,7 @@ public class UserService {
             return null;
         }
         User user = optionalUser.get();
-        if(passwordEncoder.matches(password, user.getPassword())) {
+        if (passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }
         return null;

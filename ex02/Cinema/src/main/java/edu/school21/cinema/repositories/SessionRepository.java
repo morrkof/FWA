@@ -4,7 +4,7 @@ import edu.school21.cinema.models.Session;
 
 import java.util.List;
 
-public interface SessionRepository extends CrudRepository<Session>{
+public interface SessionRepository extends CrudRepository<Session> {
 
     List<Session> findAllByUserid(long userid);
 }

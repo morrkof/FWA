@@ -29,9 +29,9 @@ public class Image {
         this.size = size;
         this.mimetype = mimetype;
         if (size >= 1000000) {
-            this.normalSize = size/1000000 + "MB";
+            this.normalSize = size / 1000000 + "MB";
         } else if (size >= 1000) {
-            this.normalSize = size/1000 + "KB";
+            this.normalSize = size / 1000 + "KB";
         } else {
             this.normalSize = size + "B";
         }
@@ -45,9 +45,9 @@ public class Image {
         this.size = size;
         this.mimetype = mimetype;
         if (size >= 1048576) {
-            this.normalSize = size/1048576f + "MB";
+            this.normalSize = size / 1048576f + "MB";
         } else if (size >= 1024) {
-            this.normalSize = size/1024f + "KB";
+            this.normalSize = size / 1024f + "KB";
         } else {
             this.normalSize = size + "B";
         }

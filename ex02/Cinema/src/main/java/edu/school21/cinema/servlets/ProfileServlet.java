@@ -3,7 +3,6 @@ package edu.school21.cinema.servlets;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.services.ImageService;
 import edu.school21.cinema.services.SessionService;
-import edu.school21.cinema.services.UserService;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.ServletConfig;
@@ -18,10 +17,6 @@ import java.io.IOException;
 
 @WebServlet("/profile")
 public class ProfileServlet extends HttpServlet {
-
-    public ProfileServlet() {
-        super();
-    }
 
     private SessionService sessionService;
     private ImageService imageService;
@@ -46,9 +41,5 @@ public class ProfileServlet extends HttpServlet {
             session.setAttribute("image", imageService.getImageByUserId(user));
             req.getRequestDispatcher("WEB-INF/jsp/profile.jsp").forward(req, resp);
         }
-    }
-
-    public void destroy() {
-        super.destroy();
     }
 }
