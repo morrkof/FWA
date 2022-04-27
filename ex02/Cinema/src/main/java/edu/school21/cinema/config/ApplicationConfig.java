@@ -37,6 +37,9 @@ public class ApplicationConfig {
     @Value("${db.driver.name}")
     private String driverName;
 
+    @Value("${storage.path}")
+    private String storagePath;
+
     @Bean
     public HikariDataSource dataSource() {
         HikariDataSource ds = new HikariDataSource();
@@ -45,6 +48,11 @@ public class ApplicationConfig {
         ds.setPassword(password);
         ds.setDriverClassName(driverName);
         return ds;
+    }
+
+    @Bean
+    public String getStoragePath() {
+        return storagePath;
     }
 
 //    @Bean

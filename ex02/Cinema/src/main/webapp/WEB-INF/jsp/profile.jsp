@@ -60,7 +60,7 @@
         <tbody>
         <c:forEach items="${requestScope.userImages}" var="img">
             <tr>
-                <td> <a href="<c:out value="${img.filepath}"/>"><c:out value="${img.originalName}"/> </a></td>
+                <td> <a href="/images/<c:out value="${img.userId}"/>/<c:out value="${img.uniqueName}"/>" target="_blank" />  <c:out value="${img.originalName}"/> </a></td>
                 <td><c:out value="${img.normalSize}"/></td>
                 <td><c:out value="${img.mimetype}"/></td>
                 <td>

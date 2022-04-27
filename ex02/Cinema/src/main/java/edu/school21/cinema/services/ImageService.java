@@ -1,10 +1,14 @@
 package edu.school21.cinema.services;
 
+import edu.school21.cinema.config.ApplicationConfig;
 import edu.school21.cinema.models.Image;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.repositories.ImageRepository;
 import edu.school21.cinema.repositories.ImageRepositoryImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -34,7 +38,10 @@ public class ImageService {
     }
 
     public Image saveImage(HttpServletRequest req, Long userid) throws ServletException, IOException {
-        Path pathProject = Files.createDirectories(Paths.get("src/main/webapp/images/" + userid));
+        ApplicationContext springContext = (ApplicationContext) new AnnotationConfigApplicationContext(ApplicationConfig.class);
+        String storagePath = springContext.getBean("getStoragePath", String.class);
+        System.out.println(storagePath);
+        Path pathProject = Files.createDirectories(Paths.get(storagePath + userid));
         Path pathContainer = Files.createDirectories(Paths.get("target/cargo/configurations/tomcat9x/webapps/images/" + userid));
         Part filePart = req.getPart("file");
 
